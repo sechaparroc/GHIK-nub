@@ -1,3 +1,16 @@
+/*
+BVH Reconstruction using GHIK Tree
+By Sebastian Chaparro Cuevas
+
+This example shows the performance of the IK Solver when reconstructing the motion of an Articulated Body from a .bvh file.
+Several experiments were conducted using:
+1. The Tree Bones Zoo Free Pack. visit https://gumroad.com/truebones/p/free-truebones-zoo-over-75-animals-and-animations.
+   It will ask for a method of Payment but, you can omit this using the freecode: truebones4freefree.
+2. SFU Motion Capture Database -- Available at -- http://mocap.cs.sfu.ca/
+3. CMU mocap dataset in bvh format -- Available at -- https://github.com/una-dinosauria/cmu-mocap
+*/
+
+
 import nub.core.*;
 import nub.core.constraint.*;
 import nub.ik.animation.Skeleton;
@@ -9,15 +22,6 @@ import nub.processing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-/*
-This example shows the performance of the IK Solver when reconstructing the motion of an Articulated Body from a .bvh file.
-Several experiments were conducted using:
-1. The Tree Bones Zoo Free Pack. visit https://gumroad.com/truebones/p/free-truebones-zoo-over-75-animals-and-animations.
-   It will ask for a method of Payment but, you can omit this using the freecode: truebones4freefree.
-2. SFU Motion Capture Database -- Available at -- http://mocap.cs.sfu.ca/
-3. CMU mocap dataset in bvh format -- Available at -- https://github.com/una-dinosauria/cmu-mocap
-*/
 
 //Place here the absolute path of a BVH File.
 boolean absolute_path = false; //Define if the path is absolute or relative to the sketch location
@@ -56,9 +60,9 @@ public void setup(){
     IKSkeleton.setTargetRadius(scene.radius() * 0.02f);
     IKSkeleton.setRadius(scene.radius() * 0.01f);
     IKSkeleton.setBoneWidth(scene.radius() * 0.01f);
-    IKSkeleton.enableIK(GHIK.HeuristicMode.CCD);
+    IKSkeleton.enableIK(GHIK.HeuristicMode.TRIK_ECTIK);
     IKSkeleton.enableDirection(true); //Enable - Disable target direction.
-    IKSkeleton.setMaxError(0.01f * skeletonHeight);
+    IKSkeleton.setMaxError(0.001f * skeletonHeight);
     IKSkeleton.addTargets();
     //Relocate the skeletons
     loader.skeleton().reference().translate(0,0,-skeletonHeight * 2f);
