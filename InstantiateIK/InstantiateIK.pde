@@ -113,12 +113,12 @@ void setup() {
     //Define Text Properties
     textAlign(CENTER);
     textSize(24);
+    scene.enableHint(Scene.AXES);
 }
 
 void draw() {
     background(0);
     if(scene.is3D()) lights();
-    scene.drawAxes();
     scene.render();
     noLights();
     scene.beginHUD();

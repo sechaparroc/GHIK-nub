@@ -49,7 +49,7 @@ void setup() {
     scene.setType(Graph.Type.ORTHOGRAPHIC);
     scene.leftHanded = false;
     scene.fit(1);
-    //2. Load the Skeleton
+    //2. Load the Skeleton (using skeleton builder)
     skeleton = new Skeleton(skeletonPath);
     //3. Enable IK and add targets at the leaf nodes
     skeleton.enableIK();

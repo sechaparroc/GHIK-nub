@@ -159,6 +159,7 @@ public static class Util {
     }
     //Consider Standard Form: Parent Z Axis is Pointing at its Child
     chainRoot.setTranslation(translation);
+    chain.get(numJoints - 1).tagging = false;
     //chainRoot.setupHierarchy();
     return chain;
   }
@@ -192,6 +193,7 @@ public static class Util {
       prevJoint = joint;
       chain.add(joint);
     }
+    chain.get(numJoints - 1).tagging = false;
     return chain;
   }
 
@@ -224,6 +226,7 @@ public static class Util {
       prevJoint = joint;
       chain.add(joint);
     }
+    chain.get(numJoints - 1).tagging = false;
     return chain;
   }
 
@@ -332,7 +335,7 @@ public static class Util {
   public static void printInfo(Scene scene, Solver solver, Vector basePosition) {
     PGraphics pg = scene.context();
     pg.pushStyle();
-    pg.fill(255);
+    pg.fill(200);
     pg.textSize(15);
     Vector pos = scene.screenLocation(basePosition);
     if (solver instanceof GHIK) {
@@ -340,9 +343,9 @@ public static class Util {
 
       String heuristics = String.join(" ", GHIK.mode().name().split("_"));
       if (GHIK.enableTwist()) heuristics += "\nWITH TWIST";
-      String error = "\n Error (pos): " + String.format("%.7f", GHIK.positionError());
+      String error = "\n Error (pos): " + String.format("%.5f", GHIK.positionError());
       if (GHIK.direction()) {
-        error += "\n Error (or): " + String.format("%.7f", GHIK.orientationError());
+        error += "\n Error (or): " + String.format("%.5f", GHIK.orientationError());
       }
       error += "\nAccum error : " + solver.accumulatedError();
       pg.text(heuristics + error + "\n iter : " + solver.lastIteration(), pos.x() - 30, pos.y() + 10, pos.x() + 30, pos.y() + 50);

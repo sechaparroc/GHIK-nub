@@ -41,7 +41,7 @@ import java.util.Random;
 
 //Benchmark Parameters
 int numJoints = 10; //Define the number of joints that each chain will contain
-Util.ConstraintType constraintType = Util.ConstraintType.CONE_ELLIPSE; //Choose among Util.ConstraintType.NONE, Util.ConstraintType.HINGE, Util.ConstraintType.CONE_ELLIPSE, Util.ConstraintType.MIX_CONSTRAINED 
+Util.ConstraintType constraintType = Util.ConstraintType.NONE; //Choose among Util.ConstraintType.NONE, Util.ConstraintType.HINGE, Util.ConstraintType.CONE_ELLIPSE, Util.ConstraintType.MIX_CONSTRAINED 
 Util.SolverType solversType[] = {Util.SolverType.CCD, Util.SolverType.TIK, Util.SolverType.TRIK, Util.SolverType.BFIK_TRIK, Util.SolverType.TRIK_ECTIK};
 ArrayList<Solver> solvers; //Will store Solvers
 int randRotation = -1; //Set seed to generate initial random rotations, otherwise set to -1
@@ -139,7 +139,13 @@ void setup() {
 }
 
 void draw() {
-  if (scene.is3D()) lights();
+  lights();
+  ambientLight(102, 102, 102);
+  lightSpecular(204, 204, 204);
+  directionalLight(102, 102, 102, 0, 0, -1);
+  specular(255, 255, 255);
+  shininess(10);
+
   //Draw Constraints
   scene.render();
   scene.beginHUD();
@@ -235,10 +241,11 @@ void keyPressed() {
 
   if (key == 'm' || key == 'M') {
     for (Solver s : solvers) {
-      if (s instanceof GHIK)
+      if (s instanceof GHIK){
         ((GHIK) s).context().setSingleStep(!((GHIK) s).context().singleStep());
-      if (s instanceof GHIK)
-        ((GHIK) s).context().setSingleStep(!((GHIK) s).context().singleStep());
+        if(((GHIK) s).context().singleStep())
+          s.setTimesPerFrame(1);
+      }
     }
   }
 
